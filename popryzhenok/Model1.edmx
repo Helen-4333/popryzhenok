@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DemoModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Agent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="AgentTypeID" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="300" />
+          <Property Name="INN" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="KPP" Type="varchar" MaxLength="9" />
+          <Property Name="DirectorName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="Logo" Type="nvarchar" MaxLength="100" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AgentType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Image" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Agent_AgentType">
+          <End Role="AgentType" Type="Self.AgentType" Multiplicity="1" />
+          <End Role="Agent" Type="Self.Agent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AgentType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Agent">
+              <PropertyRef Name="AgentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DemoModelContainer">
+          <EntitySet Name="Agent" EntityType="Self.Agent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AgentType" EntityType="Self.AgentType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Agent_AgentType" Association="Self.FK_Agent_AgentType">
+            <End Role="AgentType" EntitySet="AgentType" />
+            <End Role="Agent" EntitySet="Agent" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DemoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Agent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AgentTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="INN" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="KPP" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="DirectorName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Logo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AgentType" Relationship="Self.FK_Agent_AgentType" FromRole="Agent" ToRole="AgentType" />
+        </EntityType>
+        <EntityType Name="AgentType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Agent" Relationship="Self.FK_Agent_AgentType" FromRole="AgentType" ToRole="Agent" />
+        </EntityType>
+        <Association Name="FK_Agent_AgentType">
+          <End Role="AgentType" Type="Self.AgentType" Multiplicity="1" />
+          <End Role="Agent" Type="Self.Agent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AgentType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Agent">
+              <PropertyRef Name="AgentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DemoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Agent" EntityType="Self.Agent" />
+          <EntitySet Name="AgentType" EntityType="Self.AgentType" />
+          <AssociationSet Name="FK_Agent_AgentType" Association="Self.FK_Agent_AgentType">
+            <End Role="AgentType" EntitySet="AgentType" />
+            <End Role="Agent" EntitySet="Agent" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DemoModelContainer" CdmEntityContainer="DemoEntities">
+          <EntitySetMapping Name="Agent">
+            <EntityTypeMapping TypeName="DemoModel.Agent">
+              <MappingFragment StoreEntitySet="Agent">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="AgentTypeID" ColumnName="AgentTypeID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="KPP" ColumnName="KPP" />
+                <ScalarProperty Name="DirectorName" ColumnName="DirectorName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AgentType">
+            <EntityTypeMapping TypeName="DemoModel.AgentType">
+              <MappingFragment StoreEntitySet="AgentType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
